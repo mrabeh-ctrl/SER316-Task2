@@ -24,7 +24,6 @@ public class GameEngine {
     }
 
     public GuessResult makeGuess(int guess) {
-        // Check if user wants to quit (negative number)
         if (guess < 0) {
             userQuit = true;
             return new GuessResult(false, "Exiting game...", attempts);
@@ -35,26 +34,21 @@ public class GameEngine {
         if (guess == target) {
             gameWon = true;
             return new GuessResult(true, "Correct! You guessed it in " + attempts + " attempts.", attempts);
-
-        } else if (guess < target) {
-            return new GuessResult(false, "Too low! Try a higher number.", attempts);
-        } else {
-            return new GuessResult(false, "Too high! Try a lower number.", attempts);
-
         } else if (attempts >= MAX_ATTEMPTS) {
             gameOver = true;
             return new GuessResult(false, "Game Over! You've used all " + MAX_ATTEMPTS + " attempts. The number was " + target + ".", attempts);
         } else {
             int remaining = MAX_ATTEMPTS - attempts;
             GuessResult result;
+
             if (guess < target) {
                 result = new GuessResult(false, "Too low!", attempts);
             } else {
                 result = new GuessResult(false, "Too high!", attempts);
             }
+
             result.setRemainingAttempts(remaining);
             return result;
- (Implement max attempts logic and game over condition)
         }
     }
 
@@ -72,6 +66,7 @@ public class GameEngine {
 
     public boolean hasUserQuit() {
         return userQuit;
+    }
 
     public boolean isGameOver() {
         return gameOver;
